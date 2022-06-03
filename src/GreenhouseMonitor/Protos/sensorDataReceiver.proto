@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+service SensorDataReceiver {
+  rpc StoreDataBatch (SensorDataBatch) returns (StoreDataBatchReply);
+}
+
+message SensorDataBatch {
+  message SensorData {
+	string sensorId = 1;
+	repeated SensorDataEntry entries = 2;
+  }
+
+  message SensorDataEntry {
+	int64 timestamp = 1;
+	double value = 2;
+  }
+
+  repeated SensorData sensors = 1;
+}
+
+message StoreDataBatchReply {
+  bool ok = 1;
+}

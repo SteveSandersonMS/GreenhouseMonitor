@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>net7.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<WasiRunnerArgs>--tcplisten localhost:5000</WasiRunnerArgs>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Wasi.AspNetCore.Server.Native" Version="0.2.0-preview.10027" />
+		<PackageReference Include="Wasi.AspNetCore.BundledFiles" Version="0.2.0-preview.10027" />
+		<PackageReference Include="Wasi.Sdk" Version="0.2.0-preview.10027" />
+		<WasmBundleFiles Include="wwwroot\**" />
+	</ItemGroup>
+
+	<!-- Enable gRPC with codegen -->
+	<ItemGroup>
+		<Protobuf Include="Protos\sensorDataReceiver.proto" Access="internal" />
+		<PackageReference Include="Grpc.AspNetCore" Version="2.44.0" />
+		<PackageReference Include="Grpc.AspNetCore.Web" Version="2.44.0" />
+		<PackageReference Include="Grpc.Tools" Version="2.45.0" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
+	</ItemGroup>
+
+</Project>
