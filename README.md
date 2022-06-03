@@ -52,6 +52,12 @@ Now, if you want to send some simulated sensor data via gRPC-Web,
    * You should see the console output `Accepted connection from client, socket fd=5` and then, shortly after, `Now listening on...`
    * At this point, if you do something to cause the breakpoint to be hit, you should see it in VS Code
 
+## Caveats
+
+The [`Wasi.Sdk`](https://github.com/SteveSandersonMS/dotnet-wasi-sdk) is a very early experimental preview, and many things aren't yet implemented. In particular, .NET's garbage collection is not enabled at all, so over time the memory usage will grow indefinitely until the application terminates. This happens after handling several hundred HTTP requests. This is obviously something we intend to fix soon.
+
+Another issue you may encounter is that wasmtime's `sock_accept` support has some bugs. For example if a client disconnects ungracefully while a TCP connection is open, then the `wasmtime` process will terminate (this is particularly the case on Windows).
+
 ## About the included package binaries
 
 Normally people don't bundle the `.nupkg` package binaries with their application sources, so you may be wondering why there are ~15 MB of binaries in the `packages/` directory in this repo. It's simply because the version of `Wasi.Sdk` that supports debugging isn't yet published to the public NuGet feed. Once the latest package builds are published, it would not be necessary to have the `packages/` directory in this repo at all.
